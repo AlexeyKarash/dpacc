@@ -1,0 +1,28 @@
+/*#region DateRangePickerDefaultStyle*/
+.datepicker{margin:0;position:absolute;z-index:100;width:100%;background-color:#fff;/*border:1px solid #949494*/top:100%;margin-top:0.5em;~align:0;}
+div#month-wrap {height: 30px;background-color: ~site_dark_color;color:#fff;}
+div#bn_prev,
+div#bn_next {background-position:center;background-repeat:no-repeat;background-size:50% 50%;transition:background 0.3s ease;}
+div#bn_prev{margin:3px;float:~align;width:24px;height:24px}
+div#bn_next{margin:3px;float:~align_rev;width:24px;height:24px}
+div#bn_prev:hover,
+div#bn_prev:focus,
+div#bn_next:hover,
+div#bn_next:focus{}
+img.bn_img{margin:0;padding:2px}
+div#month{float:~align;padding-top:6px;width:199px;height:24px;text-align:center;font-weight:bold;font-size:1.2em}
+table#cal{width:100%;font-size:1.2em;text-align:center;border-spacing: 0;border-collapse: collapse;border: 1px solid #999;}
+table#cal th,
+table#cal td{width:35px;height:30px;padding:0;vertical-align:middle;}
+table#cal td{background-color:#fff;transition:background 0.3s ease;border:1px solid #999;}
+table#cal td.today{background-color:~hover_color;color:#fff;border:1px solid #999}
+table#cal td.empty{background-color:#f9f9f9;}
+table#cal td:hover,
+table#cal td.focus{color:#fff;background-color:~site_bright_color}
+table#cal td.empty:hover{background-color:#f9f9f9;}
+table#cal td.disabled {opacity:0.4;background-color:#fff;position:relative;}
+table#cal td.disabled:after {content:"";position:absolute;width:1px; height:100%;top:0;bottom:0;left:0;right:0;transform: rotate(-60deg);margin: auto;background-color:~txt_color;}
+table#cal td.disabled:hover,
+table#cal td.disabled.focus {color:~txt_color;background-color:#f0f0f0;opacity:1;}
+.datepicker[aria-hidden="true"]{display:none}
+/*#endregion DateRangePickerDefaultStyle*/
