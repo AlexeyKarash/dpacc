@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js'></script>
+    <script src="/AccessDatePicker.js"></script>
+</head>
+<body>
+    <input id="treat-date" type="text" class="date-input pio-access-datepicker" aria-describedby="date-field-desc">
+
+    <script>
+        $(function () {
+            
+            if($('.pio-access-datepicker').length){
+                $('.pio-access-datepicker').each(function(index, element){
+                    var dp = new datepicker({
+                        id: 'dp1', 
+                        target: 'treat-date', 
+                        isModal: true,
+                        //disableWeekend: true,
+                        startFromToday: true,
+                        //workdayInWeek: 6,
+                        lang: 'he',
+                        range:true
+                    });
+                    $(element).closest(".date-select").find('.pio-access-datepicker-toggle').click(function(e) {
+                        e.preventDefault();
+                        dp.showDlg();
+                        e.stopPropagation();
+                        
+                        return false;
+                    });
+                });
+            }
+        });
+    </script>
+    <style>
+        .date-select {display: inline-block;position: relative;}
+        .datepicker{
+margin:0;position:absolute;z-index:100;width:100%;background-color:#fff;top:100%;margin-top:0.5em;right:0;}
+div#month-wrap{
+height: 30px;background-color: #292929;color:#fff;}
+div#bn_prev,
+div#bn_next{
+background-position:center;background-repeat:no-repeat;-webkit-background-size:50% 50%;background-size:50% 50%;-webkit-transition:background 0.3s ease;-o-transition:background 0.3s ease;transition:background 0.3s ease;}
+div#bn_prev{
+margin:3px;float:right;width:24px;height:24px}
+div#bn_next{
+margin:3px;float:left;width:24px;height:24px}
+div#bn_prev:hover,
+div#bn_prev:focus,
+div#bn_next:hover,
+div#bn_next:focus{
+}
+img.bn_img{
+margin:0;padding:2px}
+div#month{
+float:right;padding-top:6px;width:199px;height:24px;text-align:center;font-weight:bold;font-size:1.2em}
+table#cal{
+width:100%;font-size:1.2em;text-align:center;border-spacing: 0;border-collapse: collapse;border: 1px solid #999;}
+table#cal th,
+table#cal td{
+width:35px;height:30px;padding:0;vertical-align:middle;}
+table#cal abbr{
+text-decoration:none;}
+table#cal td{
+background-color:#fff;-webkit-transition:background 0.3s ease;-o-transition:background 0.3s ease;transition:background 0.3s ease;border:1px solid #999;}
+table#cal td.today{
+background-color:#292929;color:#fff;border:1px solid #999}
+table#cal td.empty{
+background-color:#f9f9f9;}
+table#cal td:hover,
+table#cal td.focus{
+color:#fff;background-color:#c70008}
+table#cal td.empty:hover{
+background-color:#f9f9f9;}
+table#cal td.disabled{
+opacity:0.4;background-color:#fff;position:relative;}
+table#cal td.disabled:after{
+content:"";position:absolute;width:1px; height:100%;top:0;bottom:0;left:0;right:0;-webkit-transform: rotate(-60deg);-ms-transform: rotate(-60deg);transform: rotate(-60deg);margin: auto;background-color:#292929;}
+table#cal td.disabled:hover,
+table#cal td.disabled.focus{
+color:#292929;background-color:#f0f0f0;opacity:1;}
+table#cal td.range{
+color:#fff;background-color:lightskyblue;}
+.datepicker[aria-hidden="true"]{
+display:none}
+    </style>
+</body>
+</html>

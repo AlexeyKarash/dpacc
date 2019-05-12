@@ -21,6 +21,7 @@
     this.disableWeekend = data.disableWeekend;
     this.startFromToday = data.startFromToday;
     this.disabledDates = data.disabledDates ? data.disabledDates : [];
+    this.range = data.range ? data.range : false;
     //if (data.disabledDates) {
     //    this.disabledDates = data.disabledDates;
     //} else {
@@ -42,6 +43,18 @@
     this.oldDate = false;
 
     this.date = this.dateObj.getDate();
+    this.firstDate = {
+        day: null,
+        month: null,
+        year: null,
+        full: ''
+    };
+    this.secondDate = {
+        day: null,
+        month: null,
+        year: null,
+        full: ''
+    };
 
     this.keys = {
         tab: 9,
@@ -98,7 +111,7 @@ datepicker.prototype.baseGrid = function () {
 // @return N/A
 //
 datepicker.prototype.popGrid = function () {
-
+console.log(this.date);
     var numDays = this.calcNumDays(this.year, this.month);
     var startWeekday = this.calcStartWeekday(this.year, this.month);
     var weekday = 0;
@@ -825,18 +838,75 @@ datepicker.prototype.handleGridClick = function (id, e) {
         return true;
     }
 
-    this.$grid.find('.focus').removeClass('focus').attr('aria-selected', 'false');
-    $cell.addClass('focus').attr('aria-selected', 'true');
     this.$grid.attr('aria-activedescendant', $cell.attr('id'));
 
     var $curDay = $('#' + this.$grid.attr('aria-activedescendant'));
 
     // update the target box
     //this.$target.val((this.month < 9 ? '0' : '') + (this.month+1) + '/' + $curDay.html() + '/' + this.year);
-    this.$target.val($curDay.html() + '/' + (this.month < 9 ? '0' : '') + (this.month + 1) + '/' + this.year);
+    if(this.range){
+        var activeCells = this.$grid.find('.focus');
+        // if(activeCells.length > 1){
+            
+        // }else{
+        //     //activeCells.removeClass('focus').attr('aria-selected', 'false');
+        //     $cell.addClass('focus').attr('aria-selected', 'true');
+        // }
+        if(this.firstDate.date !== null && this.secondDate.date !== null) {
+            this.firstDate.date = parseInt($curDay.html());
+            this.firstDate.month = this.month;
+            this.firstDate.year = this.year;
+            this.firstDate.full = this.firstDate.date + '/' + (this.firstDate.month < 9 ? '0' : '') + (this.firstDate.month + 1) + '/' + this.firstDate.year;
+            this.secondDate.date = null;
+            this.secondDate.month = null;
+            this.secondDate.year = null;
+            this.secondDate.full = '';
+            this.$target.val(this.firstDate.full);
+            this.$grid.find('.range').removeClass('range').attr('aria-selected', 'false');
+            activeCells.removeClass('focus').attr('aria-selected', 'false');
+            $cell.addClass('focus').attr('aria-selected', 'true');
+        } else if(this.firstDate.date !== null && this.secondDate.date === null){
+            this.secondDate.date = parseInt($curDay.html());
+            this.secondDate.month = this.month;
+            this.secondDate.year = this.year;
+            this.secondDate.full = this.secondDate.date + '/' + (this.secondDate.month < 9 ? '0' : '') + (this.secondDate.month + 1) + '/' + this.secondDate.year;
+
+            var tempDate = {};
+            if(this.secondDate.year < this.firstDate.year){
+                tempDate = this.firstDate;
+                this.firstDate = this.secondDate;
+                this.secondDate = tempDate;
+            }else if(this.secondDate.year === this.firstDate.year && this.secondDate.month < this.firstDate.month){
+                tempDate = this.firstDate;
+                this.firstDate = this.secondDate;
+                this.secondDate = tempDate;
+            }else if(this.secondDate.year === this.firstDate.year && this.secondDate.month === this.firstDate.month && this.secondDate.date < this.firstDate.date){
+                tempDate = this.firstDate;
+                this.firstDate = this.secondDate;
+                this.secondDate = tempDate;
+            }
+            this.highLightRange(this.firstDate, this.secondDate);
+            this.$target.val(this.firstDate.full + " - " + this.secondDate.full);
+            $cell.addClass('focus').attr('aria-selected', 'true');
+        }else{
+            this.firstDate.date = parseInt($curDay.html());
+            this.firstDate.month = this.month;
+            this.firstDate.year = this.year;
+            this.firstDate.full = this.firstDate.date + '/' + (this.firstDate.month < 9 ? '0' : '') + (this.firstDate.month + 1) + '/' + this.firstDate.year;
+            this.$target.val(this.firstDate.full);
+            //this.firstDate = this.$target.val();
+            activeCells.removeClass('focus').attr('aria-selected', 'false');
+            $cell.addClass('focus').attr('aria-selected', 'true');
+        }
+    }else{
+        this.$grid.find('.focus').removeClass('focus').attr('aria-selected', 'false');
+        $cell.addClass('focus').attr('aria-selected', 'true');
+        this.$target.val($curDay.html() + '/' + (this.month < 9 ? '0' : '') + (this.month + 1) + '/' + this.year);
+    }
 
     // dismiss the dialog box
-    this.hideDlg();
+    if(!this.range || (this.range && this.secondDate.date !== null))
+        this.hideDlg();
 
     e.stopPropagation();
     return false;
@@ -932,6 +1002,17 @@ datepicker.prototype.hideDlg = function () {
     this.$target.focus();
 
 } // end showDlg()
+
+
+datepicker.prototype.highLightRange = function(firstDateObj, secondDateObj){
+    if(firstDateObj.year === secondDateObj.year && firstDateObj.month === secondDateObj.month){
+        for(var i = (firstDateObj.date+1); i < secondDateObj.date; i++){
+            this.$grid.find("#day"+i).addClass('range').attr('aria-selected', 'true');
+        }
+
+    }
+
+}
 
 //
 //Help Function
