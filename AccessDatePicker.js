@@ -137,7 +137,7 @@ console.log(this.date);
     for (curDay = 1; curDay <= numDays; curDay++) {
         var curDate = new Date(this.year + "/" + (this.month + 1) + "/" + curDay);
         var isDisabledDate = false;
-        if (curDay == this.date && this.currentDate == true) {
+        if (curDay == this.date && this.currentDate == true) {   
 
             gridCells += '\t\t<td id="day' + curDay + '" class="today' + ((weekday > 4) ? ' weekend' : '') +
 				(((weekday > 4 && this.disableWeekend) || DisableSpecificDates(curDate, this.disabledDates)) ? ' disabled' : '') + '" headers="row' +

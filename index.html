@@ -26,11 +26,11 @@
                         lang: 'he',
                         range:true
                     });
-                    $(element).closest(".date-select").find('.pio-access-datepicker-toggle').click(function(e) {
+                    $(element).closest(".date-select").find('.pio-access-datepicker-toggle').click(function(e) { 
                         e.preventDefault();
                         dp.showDlg();
                         e.stopPropagation();
-                        
+                        console.log('tes');
                         return false;
                     });
                 });
