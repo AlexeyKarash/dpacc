@@ -10,12 +10,13 @@
 </head>
 <body>
     <input id="treat-date" type="text" class="date-input pio-access-datepicker" aria-describedby="date-field-desc">
+    <input id="treat-date1" type="text" class="date-input pio-access-datepicker" aria-describedby="date-field-desc1">
 
     <script>
         $(function () {
             
             if($('.pio-access-datepicker').length){
-                $('.pio-access-datepicker').each(function(index, element){
+                //$('.pio-access-datepicker').each(function(index, element){
                     var dp = new datepicker({
                         id: 'dp1', 
                         target: 'treat-date', 
@@ -26,14 +27,32 @@
                         lang: 'he',
                         range:true
                     });
-                    $(element).closest(".date-select").find('.pio-access-datepicker-toggle').click(function(e) { 
+                    $('#treat-date').closest(".date-select").find('.pio-access-datepicker-toggle').click(function(e) { 
                         e.preventDefault();
                         dp.showDlg();
                         e.stopPropagation();
                         console.log('tes');
                         return false;
                     });
-                });
+
+                    var dp2 = new datepicker({
+                        id: 'dp2', 
+                        target: 'treat-date1', 
+                        isModal: true,
+                        //disableWeekend: true,
+                        startFromToday: true,
+                        //workdayInWeek: 6,
+                        lang: 'he',
+                        //range:true
+                    });
+                    $('#treat-date1').closest(".date-select").find('.pio-access-datepicker-toggle').click(function(e) { 
+                        e.preventDefault();
+                        dp2.showDlg();
+                        e.stopPropagation();
+                        console.log('tes1');
+                        return false;
+                    });
+                //});
             }
         });
     </script>
@@ -84,6 +103,7 @@ content:"";position:absolute;width:1px; height:100%;top:0;bottom:0;left:0;right:
 table#cal td.disabled:hover,
 table#cal td.disabled.focus{
 color:#292929;background-color:#f0f0f0;opacity:1;}
+table#cal td.active {background-color: maroon;color: #fff;}
 table#cal td.range{
 color:#fff;background-color:lightskyblue;}
 .datepicker[aria-hidden="true"]{
