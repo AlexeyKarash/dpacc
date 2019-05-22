@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1</title>
+    <link rel="stylesheet" href="css//bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link href="css/styles.css" rel="stylesheet">
+	<script src="js/vue.js"></script>
+	<style>
+	.is-valid {
+		background-color:rgba(255,0,0,0.7);color: #fff;
+	}
+	</style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="sample">
+            <form>
+        		<div class="progress">
+					<div class="progress-bar" :style='progress'></div>
+				</div>
+				<div>
+					<div class="form-group" v-for="(item, index) in info" :class="{'is-valid' : (!controls[index].untouched && controls[index].error) }">
+						<label>{{item.name}}</label>
+	                    <input type="text" class="form-control" v-model='item.value' @input="validate(index)">
+	                </div>
+				</div>
+				<button class="btn btn-primary" :disabled="!formValid">
+					Send Data
+				</button>
+			</form>
+			<div>
+				<table class="table table-bordered">
+					<tr>
+						<td></td>
+						<td></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+    </div>
+	<script>
+		
+		new Vue({
+			el: '.sample',
+			data: {
+				info: [
+					{
+						name: 'Name',
+						value: '',
+						pattern: /^[a-zA-Z]{2,30}$/
+					},
+					{
+						name: 'Phone',
+						value: '',
+						pattern: /^[0-9]{7,14}$/
+					},
+					{
+						name: 'Email',
+						value: '',
+						pattern: /.+/
+					},
+					{
+						name: 'Some Field 1',
+						value: '',
+						pattern: /.+/
+					},
+					{
+						name: 'Some Field 2',
+						value: '',
+						pattern: /.+/
+					}
+				],
+				controls: []
+			},
+			beforeMount() {
+				for(var i =0;i < this.info.length; i++){
+					this.controls.push({
+						error: true,
+						untouched: true
+					});
+				}
+			},
+			methods: {
+				validate(index) {
+					this.controls[index].untouched = false;
+					var thisItem = this.info[index];
+					this.controls[index].error = !thisItem.pattern.test(thisItem.value);
+				}
+			},
+			computed: {
+				progress: function() {
+					var validItems = this.controls.filter(function(item){
+						return item.error == false;
+					}).length;
+
+					return {
+						width: validItems/this.controls.length * 100 + '%',
+						backgroundColor: 'rgba(0,0,255, '+ validItems * 0.15+')'
+					}
+				},
+				formValid: function() {
+					return this.controls.filter(function(item){
+						return item.error == false;
+					}).length == this.controls.length;
+				}
+			},
+		});
+	</script>
+</body>
+</html>
