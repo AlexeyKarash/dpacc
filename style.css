@@ -33,7 +33,9 @@ background-color:#292929;color:#fff;border:1px solid #999}
 table#cal td.empty{
 background-color:#f9f9f9;}
 table#cal td:hover,
-table#cal td.focus{
+table#cal td.range:hover,
+table#cal td.focus,
+table#cal td.range.focus{
 color:#fff;background-color:#c70008}
 table#cal td.empty:hover{
 background-color:#f9f9f9;}
