@@ -273,6 +273,12 @@ datepicker.prototype.showPrevMonth = function (offset) {
 
         this.$grid.attr('aria-activedescendant', day);
         this.$id.find('#' + day).addClass('focus').attr('aria-selected', 'true');
+    }else{
+        var numDays = this.calcNumDays(this.year, this.month);
+        var day = 'day' + (numDays - 0);
+
+        this.$grid.attr('aria-activedescendant', day);
+        this.$id.find('#' + day).addClass('focus').attr('aria-selected', 'true');
     }
 
     if(!this.firstDate.full.length)
@@ -333,6 +339,11 @@ datepicker.prototype.showNextMonth = function (offset) {
     // if offset was specified, set focus on the first day + specified offset
     if (offset != null) {
         var day = 'day' + offset;
+
+        this.$grid.attr('aria-activedescendant', day);
+        this.$id.find('#' + day).addClass('focus').attr('aria-selected', 'true');
+    }else{
+        var day = 'day' + 1;
 
         this.$grid.attr('aria-activedescendant', day);
         this.$id.find('#' + day).addClass('focus').attr('aria-selected', 'true');
